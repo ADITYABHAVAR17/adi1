@@ -10,64 +10,302 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="cyber-styles.css">
 </head>
 
-<body class="bg-gradient-to-br from-blue-900 via-purple-900 to-pink-700 min-h-screen flex flex-col">
-    <!-- Three.js Canvas Background -->
-    <div id="three-bg" class="fixed inset-0 -z-10"></div>
-    <header class="py-8 flex flex-col items-center justify-center relative overflow-hidden">
-        <div class="floating-elements"></div>
-        <h1
-            class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 drop-shadow-lg animate-fade-in typing-text">
-            Welcome to the College Student Portal</h1>
-        <p class="mt-4 text-lg text-white/80 animate-slide-up glow-text">Your gateway to success and resources</p>
-        <div class="mt-6 flex space-x-4">
-            <button class="neon-button">Get Started</button>
-            <button class="neon-button secondary">Learn More</button>
+<body class="bg-black min-h-screen flex flex-col overflow-x-hidden font-rajdhani">
+    <!-- INSANE Matrix Rain Effect -->
+    <canvas id="matrix-rain" class="fixed inset-0 z-0"></canvas>
+
+    <!-- AI Neural Network Background -->
+    <div id="neural-network" class="fixed inset-0 z-0"></div>
+
+    <!-- Holographic Three.js Background -->
+    <div id="three-bg" class="fixed inset-0 z-0"></div>
+
+    <!-- Audio Visualizer -->
+    <canvas id="audio-visualizer" class="fixed bottom-0 left-0 w-full h-32 z-10 opacity-30"></canvas>
+
+    <!-- Scanning Line Effect -->
+    <div class="scan-line"></div>
+
+    <!-- Glitch Overlay -->
+    <div class="glitch-overlay"></div>
+
+    <!-- HUD Interface -->
+    <div class="hud-overlay">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+    </div>
+
+    <!-- Holographic Loading Rings -->
+    <div id="loading-rings" class="fixed inset-0 z-50 flex items-center justify-center">
+        <div class="hologram-ring ring-1"></div>
+        <div class="hologram-ring ring-2"></div>
+        <div class="hologram-ring ring-3"></div>
+        <div class="loading-text">INITIALIZING QUANTUM PORTAL...</div>
+    </div>
+
+    <header class="relative z-20 py-16 flex flex-col items-center justify-center overflow-hidden">
+        <!-- Holographic Display Frame -->
+        <div class="holographic-frame">
+            <div class="hologram-lines"></div>
+            <h1 class="cyber-title font-orbitron font-black text-6xl md:text-8xl lg:text-9xl">
+                <span class="cyber-letter" data-letter="Q">Q</span>
+                <span class="cyber-letter" data-letter="U">U</span>
+                <span class="cyber-letter" data-letter="A">A</span>
+                <span class="cyber-letter" data-letter="N">N</span>
+                <span class="cyber-letter" data-letter="T">T</span>
+                <span class="cyber-letter" data-letter="U">U</span>
+                <span class="cyber-letter" data-letter="M">M</span>
+                <br>
+                <span class="cyber-letter" data-letter="A">A</span>
+                <span class="cyber-letter" data-letter="C">C</span>
+                <span class="cyber-letter" data-letter="A">A</span>
+                <span class="cyber-letter" data-letter="D">D</span>
+                <span class="cyber-letter" data-letter="E">E</span>
+                <span class="cyber-letter" data-letter="M">M</span>
+                <span class="cyber-letter" data-letter="Y">Y</span>
+            </h1>
+            <div class="subtitle-container">
+                <p class="cyber-subtitle">⚡ NEURAL INTERFACE ACTIVATED ⚡</p>
+                <div class="typing-animation" id="typing-text"></div>
+            </div>
+        </div>
+
+        <!-- Quantum Buttons -->
+        <div class="mt-12 flex space-x-8">
+            <button class="quantum-btn quantum-primary" data-text="ENTER MATRIX">
+                <span class="btn-bg"></span>
+                <span class="btn-text">ENTER MATRIX</span>
+                <div class="btn-particles"></div>
+            </button>
+            <button class="quantum-btn quantum-secondary" data-text="NEURAL LINK">
+                <span class="btn-bg"></span>
+                <span class="btn-text">NEURAL LINK</span>
+                <div class="btn-particles"></div>
+            </button>
         </div>
     </header>
-    <nav class="mx-auto mb-8">
-        <ul class="flex space-x-8 justify-center text-xl">
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#courses" class="nav-link">Courses</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
+    <!-- Cyberpunk Navigation -->
+    <nav class="relative z-20 mx-auto mb-12">
+        <div class="nav-container">
+            <ul class="cyber-nav flex space-x-12 justify-center">
+                <li><a href="#about" class="cyber-nav-link" data-text="NEURAL_DATA">NEURAL_DATA</a></li>
+                <li><a href="#courses" class="cyber-nav-link" data-text="PROGRAMS">PROGRAMS</a></li>
+                <li><a href="#contact" class="cyber-nav-link" data-text="CONNECT">CONNECT</a></li>
+                <li><a href="#matrix" class="cyber-nav-link" data-text="MATRIX">MATRIX</a></li>
+            </ul>
+        </div>
     </nav>
-    <main class="flex-1 container mx-auto px-4 md:px-0">
-        <section id="about" class="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-8 mb-8 animate-section">
-            <h2 class="text-3xl font-bold text-pink-400 mb-2">About Us</h2>
-            <p class="text-white/90">This website is designed for college students to access resources and information.
-                Explore, connect, and grow with us!</p>
-        </section>
-        <section id="courses"
-            class="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-8 mb-8 animate-section hover-lift">
-            <h2 class="text-3xl font-bold text-purple-400 mb-2">Available Courses</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-                <div class="course-card" data-course="Computer Science">
-                    <div class="course-icon">💻</div>
-                    <h3>Computer Science</h3>
-                    <p>Advanced programming and algorithms</p>
+
+    <main class="relative z-20 flex-1 container mx-auto px-4 md:px-8">
+        <!-- About Section with Holographic Interface -->
+        <section id="about" class="cyber-section mb-16">
+            <div class="holographic-panel">
+                <div class="panel-header">
+                    <h2 class="cyber-heading">⚡ NEURAL_DATA_STREAM ⚡</h2>
+                    <div class="data-flow"></div>
                 </div>
-                <div class="course-card" data-course="Data Science">
-                    <div class="course-icon">📊</div>
-                    <h3>Data Science</h3>
-                    <p>Analytics and machine learning</p>
-                </div>
-                <div class="course-card" data-course="Web Development">
-                    <div class="course-icon">🌐</div>
-                    <h3>Web Development</h3>
-                    <p>Modern web technologies</p>
+                <div class="panel-content">
+                    <div class="data-grid">
+                        <div class="data-point">
+                            <span class="data-label">STATUS:</span>
+                            <span class="data-value">QUANTUM_READY</span>
+                        </div>
+                        <div class="data-point">
+                            <span class="data-label">MATRIX:</span>
+                            <span class="data-value">SYNCHRONIZED</span>
+                        </div>
+                        <div class="data-point">
+                            <span class="data-label">NEURAL:</span>
+                            <span class="data-value">ENHANCED</span>
+                        </div>
+                    </div>
+                    <p class="cyber-text">Welcome to the most advanced educational neural interface ever created.
+                        Our quantum-enhanced learning protocols will upload knowledge directly to your consciousness.
+                    </p>
+
+                    <!-- DNA Helix Animation -->
+                    <div class="dna-container">
+                        <div class="dna-helix"></div>
+                    </div>
                 </div>
             </div>
         </section>
-        <section id="contact" class="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-8 mb-8 animate-section">
-            <h2 class="text-3xl font-bold text-blue-400 mb-2">Contact Us</h2>
-            <p class="text-white/90">Email: <a href="mailto:info@collegeportal.com"
-                    class="underline text-pink-300">info@collegeportal.com</a></p>
+
+        <!-- Courses Section with AI Interface -->
+        <section id="courses" class="cyber-section mb-16">
+            <div class="holographic-panel">
+                <div class="panel-header">
+                    <h2 class="cyber-heading">🧠 NEURAL_PROGRAMS 🧠</h2>
+                    <div class="ai-indicator">
+                        <span class="ai-pulse"></span>
+                        <span class="ai-text">AI_ENHANCED</span>
+                    </div>
+                </div>
+                <div class="programs-grid">
+                    <div class="program-card quantum-programming">
+                        <div class="card-glow"></div>
+                        <div class="card-header">
+                            <div class="program-icon">🌌</div>
+                            <div class="program-status">QUANTUM</div>
+                        </div>
+                        <h3 class="program-title">QUANTUM COMPUTING</h3>
+                        <p class="program-desc">Manipulate reality through quantum algorithms</p>
+                        <div class="program-progress">
+                            <div class="progress-bar quantum"></div>
+                            <span class="progress-text">99.7% COMPLETE</span>
+                        </div>
+                        <div class="card-particles"></div>
+                    </div>
+
+                    <div class="program-card neural-networks">
+                        <div class="card-glow"></div>
+                        <div class="card-header">
+                            <div class="program-icon">🧠</div>
+                            <div class="program-status">NEURAL</div>
+                        </div>
+                        <h3 class="program-title">AI CONSCIOUSNESS</h3>
+                        <p class="program-desc">Create artificial beings with soul</p>
+                        <div class="program-progress">
+                            <div class="progress-bar neural"></div>
+                            <span class="progress-text">85.3% COMPLETE</span>
+                        </div>
+                        <div class="card-particles"></div>
+                    </div>
+
+                    <div class="program-card cybersecurity">
+                        <div class="card-glow"></div>
+                        <div class="card-header">
+                            <div class="program-icon">🛡️</div>
+                            <div class="program-status">CYBER</div>
+                        </div>
+                        <h3 class="program-title">MATRIX SECURITY</h3>
+                        <p class="program-desc">Defend the digital realm from threats</p>
+                        <div class="program-progress">
+                            <div class="progress-bar cyber"></div>
+                            <span class="progress-text">92.1% COMPLETE</span>
+                        </div>
+                        <div class="card-particles"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section with Quantum Communication -->
+        <section id="contact" class="cyber-section mb-16">
+            <div class="holographic-panel">
+                <div class="panel-header">
+                    <h2 class="cyber-heading">📡 QUANTUM_LINK 📡</h2>
+                    <div class="signal-indicator">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <span class="signal-text">SIGNAL: STRONG</span>
+                    </div>
+                </div>
+                <div class="contact-interface">
+                    <div class="communication-hub">
+                        <div class="comm-channel">
+                            <div class="channel-icon">📧</div>
+                            <div class="channel-info">
+                                <span class="channel-label">NEURAL_MAIL:</span>
+                                <span class="channel-value">quantum@academy.matrix</span>
+                            </div>
+                        </div>
+                        <div class="comm-channel">
+                            <div class="channel-icon">🌐</div>
+                            <div class="channel-info">
+                                <span class="channel-label">MATRIX_FREQ:</span>
+                                <span class="channel-value">137.036 Hz</span>
+                            </div>
+                        </div>
+                        <div class="comm-channel">
+                            <div class="channel-icon">📱</div>
+                            <div class="channel-info">
+                                <span class="channel-label">NEURAL_LINK:</span>
+                                <span class="channel-value">+1-800-QUANTUM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quantum Message Interface -->
+                    <div class="quantum-terminal">
+                        <div class="terminal-header">
+                            <span class="terminal-title">QUANTUM_TERMINAL_v3.0</span>
+                            <div class="terminal-controls">
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                                <span class="control close"></span>
+                            </div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="prompt">quantum@academy:~$</span>
+                                <span class="command">initiate_neural_link</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output">NEURAL LINK ESTABLISHED...</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output">QUANTUM ENCRYPTION: ACTIVE</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output">READY FOR COMMUNICATION</span>
+                            </div>
+                            <div class="terminal-line typing">
+                                <span class="prompt">quantum@academy:~$</span>
+                                <span class="cursor">|</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-    <footer class="bg-gradient-to-r from-purple-900 to-blue-900 text-white py-6 shadow-2xl rounded-t-xl animate-footer">
-        <p class="text-center text-lg">&copy; 2025 College Student Portal. All rights reserved.</p>
+
+    <!-- Cyberpunk Footer -->
+    <footer class="relative z-20 cyber-footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4 class="footer-title">QUANTUM ACADEMY</h4>
+                <p class="footer-text">Transcending reality through education</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">NEURAL LINKS</h4>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Matrix Access</a>
+                    <a href="#" class="footer-link">Quantum Docs</a>
+                    <a href="#" class="footer-link">Neural Hub</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">SYSTEM STATUS</h4>
+                <div class="system-stats">
+                    <div class="stat">
+                        <span class="stat-label">UPTIME:</span>
+                        <span class="stat-value">99.99%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">USERS:</span>
+                        <span class="stat-value">∞</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright">© 2025 QUANTUM ACADEMY • NEURAL INTERFACE v3.0 • MATRIX PROTOCOL ENABLED</p>
+        </div>
     </footer>
     <style>
         /* Enhanced CSS with modern techniques */
@@ -356,228 +594,440 @@
         }
     </style>
     <script>
-        // Enhanced GSAP Animations with ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        // ULTIMATE CYBERPUNK JAVASCRIPT THAT WILL BLOW YOUR MIND 💀🔥
 
-        window.addEventListener('DOMContentLoaded', () => {
-            // Custom cursor
+        // Matrix Rain Effect
+        function createMatrixRain() {
+            const canvas = document.getElementById('matrix-rain');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const nums = '0123456789';
+            const alphabet = katakana + latin + nums;
+
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+
+            const rainDrops = [];
+
+            for (let x = 0; x < columns; x++) {
+                rainDrops[x] = 1;
+            }
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#00ff41';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < rainDrops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                    if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        rainDrops[i] = 0;
+                    }
+                    rainDrops[i]++;
+                }
+            }
+
+            setInterval(draw, 35);
+        }
+
+        // Custom Cursor with Particle Trail
+        function createCustomCursor() {
             const cursor = document.createElement('div');
             cursor.className = 'custom-cursor';
             document.body.appendChild(cursor);
 
+            const trail = [];
+            const trailLength = 10;
+
             document.addEventListener('mousemove', (e) => {
-                gsap.to(cursor, {
-                    x: e.clientX - 10,
-                    y: e.clientY - 10,
-                    duration: 0.1
-                });
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+
+                // Create particle trail
+                trail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+
+                if (trail.length > trailLength) {
+                    trail.shift();
+                }
+
+                // Create random particles
+                if (Math.random() > 0.95) {
+                    createParticle(e.clientX, e.clientY);
+                }
             });
 
-            // Enhanced entrance animations
-            gsap.timeline()
-                .from('header', { duration: 1.2, y: -100, opacity: 0, ease: 'bounce.out' })
-                .from('nav ul li', { duration: 0.8, y: 50, opacity: 0, stagger: 0.15, ease: 'back.out(1.7)' }, '-=0.5')
-                .from('.neon-button', { duration: 0.6, scale: 0, opacity: 0, stagger: 0.1, ease: 'back.out(1.7)' }, '-=0.3');
+            function createParticle(x, y) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 4px;
+                    height: 4px;
+                    background: #00ff41;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9998;
+                    left: ${x}px;
+                    top: ${y}px;
+                    box-shadow: 0 0 10px #00ff41;
+                `;
 
-            // ScrollTrigger animations for sections
-            gsap.utils.toArray('.animate-section').forEach((section, i) => {
-                gsap.fromTo(section,
-                    { opacity: 0, y: 100, scale: 0.9 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 1,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: section,
-                            start: 'top 80%',
-                            end: 'bottom 20%',
-                            toggleActions: 'play none none reverse'
-                        }
+                document.body.appendChild(particle);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 3 + 1;
+                let opacity = 1;
+
+                const animate = () => {
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
+
+                    const currentX = parseFloat(particle.style.left);
+                    const currentY = parseFloat(particle.style.top);
+
+                    particle.style.left = (currentX + vx) + 'px';
+                    particle.style.top = (currentY + vy) + 'px';
+
+                    opacity -= 0.02;
+                    particle.style.opacity = opacity;
+
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
                     }
-                );
-            });
+                };
 
-            // Course cards hover animations
-            document.querySelectorAll('.course-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, { rotationY: 10, duration: 0.3, ease: 'power2.out' });
-                });
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, { rotationY: 0, duration: 0.3, ease: 'power2.out' });
-                });
-            });
+                animate();
+            }
+        }
 
-            // Parallax effect for background
-            gsap.to('.parallax-bg', {
-                yPercent: -50,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: 'body',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
+        // Audio Visualizer
+        function createAudioVisualizer() {
+            const canvas = document.getElementById('audio-visualizer');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = 128;
+
+            // Create fake audio data for visualization
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = canvas.width / 128;
+
+                for (let i = 0; i < 128; i++) {
+                    const barHeight = Math.random() * canvas.height;
+                    const hue = (i / 128) * 360;
+
+                    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+                    ctx.fillRect(i * barWidth, canvas.height - barHeight, barWidth, barHeight);
                 }
-            });
 
-            // Text reveal animation
-            gsap.fromTo('.typing-text',
-                { width: 0 },
-                {
-                    width: '100%',
-                    duration: 3,
-                    ease: 'power2.inOut',
-                    delay: 0.5
-                }
-            );
-        });
-
-        // Enhanced Three.js Background
-        const threeBg = document.getElementById('three-bg');
-        if (threeBg) {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            threeBg.appendChild(renderer.domElement);
-
-            // Create enhanced particles with different shapes
-            const particles = [];
-            const geometries = [
-                new THREE.SphereGeometry(0.1, 16, 16),
-                new THREE.BoxGeometry(0.2, 0.2, 0.2),
-                new THREE.OctahedronGeometry(0.15),
-                new THREE.TetrahedronGeometry(0.2)
-            ];
-
-            const particleCount = 150;
-            for (let i = 0; i < particleCount; i++) {
-                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
-                const material = new THREE.MeshBasicMaterial({
-                    color: new THREE.Color().setHSL(Math.random() * 0.3 + 0.7, 0.8, 0.6),
-                    transparent: true,
-                    opacity: Math.random() * 0.5 + 0.3
-                });
-
-                const mesh = new THREE.Mesh(geometry, material);
-                mesh.position.set(
-                    (Math.random() - 0.5) * 30,
-                    (Math.random() - 0.5) * 20,
-                    (Math.random() - 0.5) * 30
-                );
-                mesh.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-
-                scene.add(mesh);
-                particles.push({
-                    mesh,
-                    rotationSpeed: {
-                        x: (Math.random() - 0.5) * 0.02,
-                        y: (Math.random() - 0.5) * 0.02,
-                        z: (Math.random() - 0.5) * 0.02
-                    },
-                    floatSpeed: Math.random() * 0.02 + 0.01
-                });
+                requestAnimationFrame(draw);
             }
 
-            // Add ambient lighting
-            const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
-            scene.add(ambientLight);
+            draw();
+        }
 
-            // Add point light
-            const pointLight = new THREE.PointLight(0xf472b6, 1, 100);
-            pointLight.position.set(10, 10, 10);
-            scene.add(pointLight);
+        // Neural Network Background
+        function createNeuralNetwork() {
+            const container = document.getElementById('neural-network');
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.style.cssText = 'position: absolute; width: 100%; height: 100%; opacity: 0.1;';
 
-            camera.position.z = 15;
+            const nodes = [];
+            const connections = [];
 
-            let mouseX = 0, mouseY = 0;
-            document.addEventListener('mousemove', (event) => {
-                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-            });
+            // Create nodes
+            for (let i = 0; i < 50; i++) {
+                const node = {
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2
+                };
+                nodes.push(node);
+
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', node.x);
+                circle.setAttribute('cy', node.y);
+                circle.setAttribute('r', '3');
+                circle.setAttribute('fill', '#00ff41');
+                svg.appendChild(circle);
+                node.element = circle;
+            }
+
+            container.appendChild(svg);
 
             function animate() {
+                // Clear connections
+                connections.forEach(conn => conn.remove());
+                connections.length = 0;
+
+                nodes.forEach((node, i) => {
+                    // Move nodes
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    // Bounce off walls
+                    if (node.x < 0 || node.x > window.innerWidth) node.vx *= -1;
+                    if (node.y < 0 || node.y > window.innerHeight) node.vy *= -1;
+
+                    node.element.setAttribute('cx', node.x);
+                    node.element.setAttribute('cy', node.y);
+
+                    // Create connections
+                    nodes.forEach((otherNode, j) => {
+                        if (i !== j) {
+                            const distance = Math.sqrt(
+                                Math.pow(node.x - otherNode.x, 2) +
+                                Math.pow(node.y - otherNode.y, 2)
+                            );
+
+                            if (distance < 150) {
+                                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                                line.setAttribute('x1', node.x);
+                                line.setAttribute('y1', node.y);
+                                line.setAttribute('x2', otherNode.x);
+                                line.setAttribute('y2', otherNode.y);
+                                line.setAttribute('stroke', '#00ff41');
+                                line.setAttribute('stroke-width', '1');
+                                line.setAttribute('opacity', 1 - distance / 150);
+                                svg.appendChild(line);
+                                connections.push(line);
+                            }
+                        }
+                    });
+                });
+
                 requestAnimationFrame(animate);
+            }
 
-                // Animate particles
-                particles.forEach((particle, i) => {
-                    const { mesh, rotationSpeed, floatSpeed } = particle;
+            animate();
+        }
 
-                    // Rotation
-                    mesh.rotation.x += rotationSpeed.x;
-                    mesh.rotation.y += rotationSpeed.y;
-                    mesh.rotation.z += rotationSpeed.z;
+        // Typing Animation for Header
+        function createTypingAnimation() {
+            const element = document.getElementById('typing-text');
+            const messages = [
+                'NEURAL_LINK_ESTABLISHED...',
+                'QUANTUM_FIELD_SYNCHRONIZED...',
+                'MATRIX_ACCESS_GRANTED...',
+                'CONSCIOUSNESS_UPLOADING...',
+                'REALITY_PARAMETERS_LOADING...'
+            ];
 
-                    // Floating motion
-                    mesh.position.x += Math.sin(Date.now() * 0.001 + i) * floatSpeed;
-                    mesh.position.y += Math.cos(Date.now() * 0.001 + i) * floatSpeed;
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
 
-                    // Mouse interaction
-                    const distance = mesh.position.distanceTo(camera.position);
-                    if (distance < 20) {
-                        mesh.position.x += mouseX * 0.1;
-                        mesh.position.y += mouseY * 0.1;
+            function type() {
+                const currentMessage = messages[messageIndex];
+
+                if (isDeleting) {
+                    element.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    element.textContent = currentMessage.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 50 : 100;
+
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    typeSpeed = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+
+            type();
+        }
+
+        // Holographic Loading Animation
+        function hideLoadingScreen() {
+            setTimeout(() => {
+                const loading = document.getElementById('loading-rings');
+                loading.style.opacity = '0';
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 2000);
+            }, 3000);
+        }
+
+        // Button Quantum Effects
+        function addQuantumEffects() {
+            document.querySelectorAll('.quantum-btn').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    // Create quantum particles around button
+                    for (let i = 0; i < 20; i++) {
+                        createQuantumParticle(btn);
                     }
                 });
 
-                // Camera movement based on mouse
-                camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
-                camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
-                camera.lookAt(scene.position);
-
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                btn.addEventListener('click', (e) => {
+                    // Create quantum explosion
+                    for (let i = 0; i < 50; i++) {
+                        createQuantumExplosion(e.clientX, e.clientY);
+                    }
+                });
             });
         }
 
-        // Interactive elements
-        document.addEventListener('DOMContentLoaded', () => {
-            // Button click effects
-            document.querySelectorAll('.neon-button').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    // Create ripple effect
-                    const ripple = document.createElement('div');
-                    const rect = button.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
+        function createQuantumParticle(button) {
+            const rect = button.getBoundingClientRect();
+            const particle = document.createElement('div');
 
-                    ripple.style.cssText = `
-                        position: absolute;
-                        border-radius: 50%;
-                        background: rgba(255, 255, 255, 0.3);
-                        transform: scale(0);
-                        left: ${e.clientX - rect.left - size / 2}px;
-                        top: ${e.clientY - rect.top - size / 2}px;
-                        width: ${size}px;
-                        height: ${size}px;
-                        pointer-events: none;
-                    `;
+            particle.style.cssText = `
+                position: fixed;
+                width: 2px;
+                height: 2px;
+                background: #00ff41;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${rect.left + Math.random() * rect.width}px;
+                top: ${rect.top + Math.random() * rect.height}px;
+                box-shadow: 0 0 5px #00ff41;
+            `;
 
-                    button.style.position = 'relative';
-                    button.style.overflow = 'hidden';
-                    button.appendChild(ripple);
+            document.body.appendChild(particle);
 
-                    gsap.to(ripple, {
-                        scale: 2,
-                        opacity: 0,
-                        duration: 0.6,
-                        ease: 'power2.out',
-                        onComplete: () => ripple.remove()
-                    });
-                });
-            });
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 2 + 1;
+            let opacity = 1;
+
+            const animate = () => {
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+
+                const currentX = parseFloat(particle.style.left);
+                const currentY = parseFloat(particle.style.top);
+
+                particle.style.left = (currentX + vx) + 'px';
+                particle.style.top = (currentY + vy) + 'px';
+
+                opacity -= 0.05;
+                particle.style.opacity = opacity;
+
+                if (opacity > 0) {
+                    requestAnimationFrame(animate);
+                } else {
+                    particle.remove();
+                }
+            };
+
+            animate();
+        }
+
+        function createQuantumExplosion(x, y) {
+            const particle = document.createElement('div');
+
+            particle.style.cssText = `
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: #00ffff;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${x}px;
+                top: ${y}px;
+                box-shadow: 0 0 15px #00ffff;
+            `;
+
+            document.body.appendChild(particle);
+
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 8 + 2;
+            let opacity = 1;
+            let scale = 1;
+
+            const animate = () => {
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+
+                const currentX = parseFloat(particle.style.left);
+                const currentY = parseFloat(particle.style.top);
+
+                particle.style.left = (currentX + vx) + 'px';
+                particle.style.top = (currentY + vy) + 'px';
+
+                opacity -= 0.03;
+                scale += 0.05;
+
+                particle.style.opacity = opacity;
+                particle.style.transform = `scale(${scale})`;
+
+                if (opacity > 0) {
+                    requestAnimationFrame(animate);
+                } else {
+                    particle.remove();
+                }
+            };
+
+            animate();
+        }
+
+        // Initialize Everything
+        window.addEventListener('DOMContentLoaded', () => {
+            createMatrixRain();
+            createCustomCursor();
+            createAudioVisualizer();
+            createNeuralNetwork();
+            createTypingAnimation();
+            addQuantumEffects();
+            hideLoadingScreen();
+
+            // Add glitch effect to title periodically
+            setInterval(() => {
+                const letters = document.querySelectorAll('.cyber-letter');
+                const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                randomLetter.style.transform = 'scale(1.2) rotate(5deg)';
+                randomLetter.style.color = '#ff0080';
+
+                setTimeout(() => {
+                    randomLetter.style.transform = '';
+                    randomLetter.style.color = '';
+                }, 200);
+            }, 3000);
+
+            // Random system alerts
+            const alerts = [
+                'QUANTUM_FIELD_FLUCTUATION_DETECTED',
+                'NEURAL_PATHWAY_OPTIMIZED',
+                'MATRIX_SYNCHRONIZATION_COMPLETE',
+                'CONSCIOUSNESS_UPLOAD_SUCCESS'
+            ];
+
+            setInterval(() => {
+                console.log(`%c${alerts[Math.floor(Math.random() * alerts.length)]}`,
+                    'color: #00ff41; font-size: 16px; font-weight: bold;');
+            }, 10000);
+        });
+
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('matrix-rain');
+            const audioCanvas = document.getElementById('audio-visualizer');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            audioCanvas.width = window.innerWidth;
         });
     </script>
 </body>
